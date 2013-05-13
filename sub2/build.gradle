@@ -5,3 +5,7 @@ classes{
 		println "compilation ${project.name} done"
 	}
 }
+
+jar << {
+	throw new GradleException("failing jar task")
+}
