@@ -6,6 +6,6 @@ classes{
 	}
 }
 
-jar << {
+/*jar << {
 	throw new GradleException("failing jar task")
-}
+}*/
