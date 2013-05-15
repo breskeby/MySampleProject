@@ -5,3 +5,19 @@ classes{
 		println "compilation ${project.name} done"
 	}
 }
+
+classes.doFirst{
+	throw new GradleException("classes failed")
+}
+
+eclipse{
+	classpath{
+		file {
+			whenMerged{ cpath ->
+				cpath.entries = cpath.entries.findAll{ entry ->
+					entry.path != "resources"			
+				}
+			}
+		}
+	}
+}
