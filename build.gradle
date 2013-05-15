@@ -1,6 +1,49 @@
+
+allprojects{
+	group = "org.acme"
+}
+
+apply from:"dependencies.gradle"
+apply from:'version.gradle'
+
 subprojects{
 	apply plugin:'java'
+	apply plugin:'eclipse'
+	
+	apply plugin:'maven'
+	
 	repositories{
+		maven{
+			url = "http://localhost:8081/artifactory/acme"
+		}
 		mavenCentral()
 	}
+	
+	
+	uploadArchives {  
+	    repositories {  
+	        mavenDeployer {  
+	            repository(url: 'http://localhost:8081/acme') {  
+	                authentication(userName: 'admin', password: 'password');  
+	            }  
+	            snapshotRepository(url: 'http://localhost:8081/artifactory/acme') {  
+	                authentication(userName: 'admin', password: 'password');  
+	            }  
+	        }  
+	    }  
+	}
+}
+
+def elastic(projectName) {
+  if (allprojects.find { it.name == projectName }) {
+    println "adding project dependency on project $projectName"
+    project(projectName)
+  } else {
+    println "adding binary dependency on project $projectName"
+    dependencies.create("$group:${projectName - ':'}:$version")
+  }
+}
+
+task release{
+	dependsOn subprojects*.build
 }
