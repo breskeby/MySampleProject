@@ -1,10 +1,11 @@
-
+apply plugin:'base'
 allprojects{
 	group = "org.acme"
 }
 
-apply from:"dependencies.gradle"
-apply from:'version.gradle'
+apply from:"gradle/dependencies.gradle"
+apply from:'gradle/version.gradle'
+
 
 subprojects{
 	apply plugin:'java'
@@ -42,6 +43,29 @@ def elastic(projectName) {
     println "adding binary dependency on project $projectName"
     dependencies.create("$group:${projectName - ':'}:$version")
   }
+}
+
+// eclipse setup
+task generateLocalRepo(type: Copy) {
+	from (subprojects*.configurations.default)
+	into "$buildDir/localRepo"
+}
+
+gradle.taskGraph.whenReady{graph ->
+	if(graph.allTasks.any{tsk -> tsk.name == "eclipse"}){
+		println "adding flatDir local repo: $rootDir/build/localRepo"
+		subprojects{
+			repositories{
+				flatDir {
+					dirs "$rootDir/build/localRepo"
+				}	
+			}
+		}
+	}
+}
+
+subprojects{
+	eclipseClasspath.dependsOn(generateLocalRepo)
 }
 
 task release{

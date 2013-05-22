@@ -1,1 +1,1 @@
-CBO-3.0.x
+CBO-3.0.x-SNAPSHOT

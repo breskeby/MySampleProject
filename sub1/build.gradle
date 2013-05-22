@@ -6,10 +6,6 @@ classes{
 	}
 }
 
-classes.doFirst{
-	throw new GradleException("classes failed")
-}
-
 eclipse{
 	classpath{
 		file {

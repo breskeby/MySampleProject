@@ -1,8 +1,8 @@
 
 
 ext.eclipseProjects = []
-if(file("eclipseSetup.gradle").exists()){
-	apply from:"eclipseSetup.gradle"	
+if(file("gradle/eclipseSetup.gradle").exists()){
+	apply from:"gradle/eclipseSetup.gradle"	
 }
 
 def projectNames = [
@@ -10,7 +10,9 @@ def projectNames = [
 
 "sub1":"sub1", 
 "sub2":"sub2",
-"sub3":"sub3"
+"sub3":"sub3",
+"sub4":"sub4"
+
 
 ]
 
