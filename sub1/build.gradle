@@ -1,13 +1,3 @@
-classes{
-	outputs.upToDateWhen{false}
-	doFirst{
-		sleep 5000
-		println "compilation ${project.name} done"
-		throw new GradleException("classes failed")
-	}
-}
-
-
 eclipse{
 	classpath{
 		file {

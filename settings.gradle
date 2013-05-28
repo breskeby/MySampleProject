@@ -18,10 +18,10 @@ def projectNames = [
 
 projectNames.each { projName, projPath ->
   if(projName in eclipseProjects) {
-    println "project $projName is internal to this build"
+    //println "project $projName is internal to this build"
     include projName
 	project(":$projName").projectDir = file(projPath)
   } else {
-    println "project $projName is external to this build"
+    //println "project $projName is external to this build"
   }
 }
