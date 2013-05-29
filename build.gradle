@@ -20,6 +20,10 @@ subprojects{
 		mavenCentral()
 	}
 	
+	dependencies{
+		testCompile "junit:junit:4.11"
+	}
+	
 	
 	uploadArchives {  
 	    repositories {  
