@@ -1,4 +1,4 @@
 MySampleProject <<email>> <<bla>>
 ===============
 
-MySampleProject
+MySampleProject <<email_address>>
