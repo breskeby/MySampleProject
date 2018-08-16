@@ -6,3 +6,4 @@
 *.ear
 .build
 sub1/build
+sub2/build
