@@ -4,7 +4,7 @@ repositories{
 
 dependencies{
 	//compile elastic("sub1")
-	compile elastic("sub3")
+	compile  project(":sub3")
 	compile "org.slf4j:slf4j-api:1.7.5"
  	compile "javax.servlet:servlet-api:2.4"
 	compile "javax.servlet:javax.servlet-api:3.0.1"

@@ -1,6 +1,6 @@
 apply plugin:'base'
 allprojects{
-	group = "org.acme"
+	group = "com.breskeby.sample"
 }
 
 apply from:"gradle/dependencies.gradle"
@@ -9,69 +9,13 @@ apply from:'gradle/version.gradle'
 
 subprojects{
 	apply plugin:'java'
-	apply plugin:'eclipse'
-	apply plugin:'idea'
 	apply plugin:'maven'
-	
+
 	repositories{
-		maven{
-			url = "http://localhost:8081/artifactory/acme"
-		}
 		mavenCentral()
 	}
-	
+
 	dependencies{
 		testCompile "junit:junit:4.11"
 	}
-	
-	
-	uploadArchives {  
-	    repositories {  
-	        mavenDeployer {  
-	            repository(url: 'http://localhost:8081/acme') {  
-	                authentication(userName: 'admin', password: 'password');  
-	            }  
-	            snapshotRepository(url: 'http://localhost:8081/artifactory/acme') {  
-	                authentication(userName: 'admin', password: 'password');  
-	            }  
-	        }  
-	    }  
-	}
-}
-
-def elastic(projectName) {
-  if (allprojects.find { it.name == projectName }) {
-//    println "adding project dependency on project $projectName"
-    project(projectName)
-  } else {
-//    println "adding binary dependency on project $projectName"
-    dependencies.create("$group:${projectName - ':'}:$version")
-  }
-}
-
-// eclipse setup
-task generateLocalRepo(type: Copy) {
-	from (subprojects*.configurations.default)
-	into "$buildDir/localRepo"
-}
-
-gradle.taskGraph.whenReady{graph ->
-	if(graph.allTasks.any{tsk -> tsk.name == "eclipse"}){
-		println "adding flatDir local repo: $rootDir/build/localRepo"
-		subprojects{
-			repositories{
-				flatDir {
-					dirs "$rootDir/build/localRepo"
-				}	
-			}
-		}
-	}
-}
-
-subprojects{
-	eclipseClasspath.dependsOn(generateLocalRepo)
-}
-
-task release{
-	dependsOn subprojects*.build
 }
